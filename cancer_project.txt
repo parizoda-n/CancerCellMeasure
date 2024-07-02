@@ -1,0 +1,134 @@
+﻿Parizoda Navruzova
+
+
+Purpose:
+The purpose of this case study is to see the impact of compactness, concavity, and texture on the radius of breast cancer cells and whether there are interactions between the independent, continuous variables affecting the radius of cancerous cells. 
+
+
+Data:
+With the advancement in technology, doctors and researchers are looking for better ways to use computer-based learning models to help facilitate diagnosis. They are using machine learning (ML) algorithms to better analyze data. Our dataset comes from the University of Wisconsin Hospitals, Madison, Wisconsin, USA. Dr. William H. Wolberg (general surgeon, clinical science center, Madison) generated the dataset from 569 breast cancer patients. The data was collected utilizing the ML algorithm. They used features that were computerized from digitized images of fine needle aspirations (FNA) of breast mass. 
+
+
+Variables used
+The dependent variable is the radius mean (y). The radius mean tells about the range between the center of the primary tumor and the widest point of spread
+The independent variables are: 
+The compactness mean (x1): describes the compactness of the cell nuclei
+The concavity mean (x2): describes the severity points of the contour 
+The texture mean (x3): describes the spatial arrangement and variation intensity also known as the gray values of a mammography image. 
+
+
+Background:
+Breast cancer is a disease in which the breast cells grow out of control. It is the most common cancer in women in the United States and it is the second leading cause of cancer death in women. The American Cancer Society estimates that in the United States in 2023 about 297,790 new cases of invasive breast cancer will be diagnosed in women. About 43,700 women die each year from breast cancer. Cancer is the abnormal growth of cells. These breast cells divide at an abnormally faster rate than normal cells and continue to accumulate forming a lump or mass. These cells eventually metastasize through the breast, the lymph nodes, and even to different parts of the body. Timely identification coupled with precise diagnosis holds significance as it has the potential to save lives. This is attributed to the ability to administer appropriate treatment promptly, thereby preventing the progression of cancer to a more advanced stage.
+
+
+Analysis
+In this case study, we are trying to examine whether there are interactions between the independent variables, compactness(x1), concavity(x2), and texture (x3) in impacting the radius of breast cancer (y). We have the following 2 models in order to analyze this. 
+
+
+Model 1: μy|x= β0+β1x1+β2x2+β3x3+εi
+
+
+β0 : the intercept; expected value of y when all the predictor variables (x1, x2, x3) are zero
+β1 : compactness mean (x1)
+β2 : concavity mean (x2)
+β3 : texture mean (x3)
+εi : assumed to be normally distributed with mean 0 and constant variance σ2., i.e N[0, σ2]
+
+
+This is the reduced model with no interactions between the independent variables.
+
+
+We also wanted to look at the impact of each independent variable individually on the response variable, radius mean. 
+Figure 1: correlation between compactness mean (x1) and radius mean (y)  
+
+
+The correlation coefficient here is 0.51, indicating a moderate positive correlation. As the compactness mean increases, the radius mean increases.
+
+
+Figure 2: correlation between concavity mean (x2) and radius mean (y)  
+
+
+The correlation coefficient here is 0.68, indicating a moderately strong positive correlation. As the concavity mean increases, the radius mean increases.
+  
+
+Figure 3: correlation between texture mean (x3) and radius mean (y)
+
+
+The correlation coefficient here is 0.32, indicating a weak positive correlation. As the texture mean increases, the radius mean increases.
+
+
+This is to say that when looking at the explanatory variables individually, each one of them is positively correlated with the radius of the breast cancer cells. 
+
+
+Model 2: μy|x= β0+β1x1+β2x2+β3x3+β4x1x2+β5x1x3+β6x2x3+εi
+
+
+β0 : the intercept; expected value of y when all the predictor variables (x1, x2, x3) are zero
+β1 : compactness (x1)
+β2 : concavity (x2)
+β3 : texture (x3)
+β4 : compactness and texture (x1 & x2)
+β5 : compactness and texture (x1 & x3)
+β6 : concavity and texture (x2 & x3)
+εi : assumed to be normally distributed with mean 0 and constant variance σ2., i.e N[0, σ2]
+
+
+This is the full model with interactions between the independent variables. 
+
+
+Our null hypothesis is that the independent variables impact the radius of breast cancer cells individually and there are no interactions. Thus our null hypothesis is the following
+H0 : μy|x=β0+β1x1+β2x2+β3x3+εi
+
+
+Our alternative model tests for interactions between the independent variables, thus it is the following 
+Ha: μy|x=β0+β1x1+β2x2+β3x3+β4x1x2+β5x1x3+β6x2x3+εi
+
+
+Before performing the analysis, we had to make sure that the data is normally distributed. To do so we produced Q-Q plots for the full and reduced models. 
+Figure 4: Q-Q plot of a full model  
+
+
+Since the data points closely follow the line and do not excessively deviate from it, we can assume that it is centered around 0 and that the distribution is normal.
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+Figure 5: Q-Q plot for the reduced model 
+
+
+Since the data points closely follow the line and do not excessively deviate from it, we can assume that it is centered around 0 and that the distribution is normal.
+
+
+Next, we performed a linear regression model for the full model (model 2), the following were the findings.
+Under the null hypothesis, we are following the F-distribution with a=0.05 on 7 and 561 degrees of freedom. The F- statistic is 91.4 with the p-value being very close to 0. Based on this, we can conclude that the interactions in this model are significant, therefore we have enough evidence to reject the null hypothesis. The interaction between concavity (x2) and texture (x3) stands out the most, with a p-value of 0.00885 and a t-value of 2.42413. This means that keeping other variables constant, for 1 unit increase in β6, the interaction between concavity and texture, radius mean increases by 2.42413 units. When analyzing multiple R2 that indicates the model’s explanatory power when looking at the sums of squares of the variables, the value is 0.5328. This means that 53.28% of the variance of the radius mean is explained by the full model with interactions. 
+Since the interaction model appeared to be significant, we performed the analysis of variance (ANOVA) next. 
+For ANOVA, our null hypothesis is that there is no improvement in model fit when adding the interaction terms in Model 2. The alternative hypothesis is that adding interaction terms improves the fit of the model. In the analysis of variance, we have 4 degrees of freedom with the F-statistic of 7.2592 and a p-value very close to 0. Using alpha of 0.05, we have enough evidence to reject the null hypothesis and conclude that using the independent variables chosen for this study, the full model significantly improves the fit of the dataset compared to Model 1, the reduced model with no interactions. 
+  
+Table 1: ANOVA table for Model 1 and Model 2. 
+In comparing two regression models, Model 1 with 565 degrees of freedom and Model 2 with 562 degrees of freedom, several key statistics were examined. The Residual Degrees of Freedom (Res.Df) represent the number of observations minus the number of model parameters. The Residual Sum of Squares (RSS) measures the variance of the unexplained portion of the data, and for Model 1 and Model 2, the respective values were 3466.2 and 3297.4. The Degrees of Freedom (Df) signify the change in degrees of freedom between the two models, revealing a difference of 3. The Sum of Squares (Sum of Sq) demonstrates the discrepancy in the sum of squared residuals between the models, with a value of 168.76. The F-statistic (F = 9.5879) evaluates whether introducing additional variables in Model 2 significantly enhances the model fit compared to the simpler Model 1. The associated p-value (3.5e-06 or 0.0000035) is exceptionally small, denoting high significance, emphasizing the rejection of the null hypothesis, indicating that Model 2 indeed offers a significantly improved fit.
+Based on all the above analysis, we can conclude that the interaction model (model 2) better explains the change in the radius of the breast cancer cells given the explanatory variables compactness, concavity, and texture. We rejected the null hypothesis because the p-value of our full model was very close to zero. When looking at our dataset, we can observe that we need all three variables to interact together to get the most accurate radius of breast cancer. 
+
+
+References
+
+
+“Breast Cancer Wisconsin (Diagnostic) Data Set.” Www.kaggle.com, www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data/data.
+
+
+Mayo Clinic. “Breast Cancer - Symptoms and Causes.” Mayo Clinic, Mayo Clinic, 27 Apr. 2022, www.mayoclinic.org/diseases-conditions/breast-cancer/symptoms-causes/syc-20352470.
+
+
+Narasimha, Aparna, et al. “Significance of Nuclear Morphometry in Benign and Malignant Breast Aspirates.” International Journal of Applied and Basic Medical Research, vol. 3, no. 1, 2013, p. 22, https://doi.org/10.4103/2229-516x.112237. Accessed 28 Nov. 2021.
+
+
+Yedjou, Clement G., et al. “Application of Machine Learning Algorithms in Breast Cancer Diagnosis and Classification.” International Journal of Science Academic Research, vol. 2, no. 1, 1 Jan. 2021, pp. 3081–3086, pubmed.ncbi.nlm.nih.gov/34825131/. Accessed 19 Dec. 2023.
